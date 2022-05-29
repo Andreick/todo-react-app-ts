@@ -4,6 +4,7 @@ import TaskItem from './TaskItem';
 
 interface TaskListProps {
   tasks: Task[];
+  deleteTask: (taskId: number) => void;
 }
 
 export default class TaskList extends Component<TaskListProps> {
@@ -18,7 +19,12 @@ export default class TaskList extends Component<TaskListProps> {
         </thead>
         <tbody>
           {this.props.tasks.map((task, index) => (
-            <TaskItem key={index} taskItem={task} />
+            <TaskItem
+              key={index}
+              id={index}
+              task={task}
+              deleteTask={this.props.deleteTask}
+            />
           ))}
         </tbody>
       </table>

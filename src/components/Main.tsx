@@ -21,6 +21,11 @@ export default class Main extends Component<{}, MainState> {
     this.setState({ tasks });
   };
 
+  deleteTask = (taskId: number) => {
+    tasks.splice(taskId, 1);
+    this.setState({ tasks });
+  };
+
   render() {
     return (
       <div>
@@ -28,7 +33,7 @@ export default class Main extends Component<{}, MainState> {
         <div>
           <CreateTask createTask={this.createTask} />
           <br />
-          <TaskList tasks={this.state.tasks} />
+          <TaskList tasks={this.state.tasks} deleteTask={this.deleteTask} />
         </div>
       </div>
     );

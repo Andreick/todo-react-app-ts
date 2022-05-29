@@ -2,7 +2,9 @@ import { Component } from 'react';
 import Task from '../model/Task';
 
 interface TaskItemProps {
-  taskItem: Task;
+  id: number;
+  task: Task;
+  deleteTask: (id: number) => void;
 }
 
 interface TaskItemState {}
@@ -10,13 +12,17 @@ interface TaskItemState {}
 export default class TaskItem extends Component<TaskItemProps> {
   state: TaskItemState = {};
 
+  deleteTask = () => {
+    this.props.deleteTask(this.props.id);
+  };
+
   render() {
     return (
       <tr>
-        <td>{this.props.taskItem.description}</td>
+        <td>{this.props.task.description}</td>
         <td>
           <button>Edit</button>
-          <button>Delet</button>
+          <button onClick={this.deleteTask}>Delet</button>
         </td>
       </tr>
     );
