@@ -1,15 +1,16 @@
 import { ChangeEventHandler, Component, FormEventHandler } from 'react';
 import Task from '../model/Task';
+import { CreateTask } from './Main';
 
 interface CreateTaskProps {
-  createTask: (task: Task) => void;
+  createTask: CreateTask;
 }
 
 interface TaskListState {
   task: Task;
 }
 
-export default class CreateTask extends Component<CreateTaskProps> {
+export default class TaskCreator extends Component<CreateTaskProps> {
   state: TaskListState = { task: { description: '', isCompleted: false } };
 
   handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {

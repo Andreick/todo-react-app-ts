@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import Task from '../model/Task';
-import CreateTask from './CreateTask';
+import TaskCreator from './TaskCreator';
 import TaskList from './TaskList';
 
 const tasks: Task[] = [];
@@ -12,7 +12,7 @@ interface MainState {
 export default class Main extends Component<{}, MainState> {
   state: MainState = { tasks };
 
-  createTask = (task: Task) => {
+  createTask: CreateTask = (task) => {
     if (task.description.trim() === '') {
       alert("Task can't be empty");
       return;
@@ -21,7 +21,12 @@ export default class Main extends Component<{}, MainState> {
     this.setState({ tasks });
   };
 
-  deleteTask = (taskId: number) => {
+  editTask: EditTask = (taskId, editedTask) => {
+    tasks[taskId] = editedTask;
+    this.setState({ tasks });
+  };
+
+  deleteTask: DeleteTask = (taskId) => {
     tasks.splice(taskId, 1);
     this.setState({ tasks });
   };
@@ -31,11 +36,19 @@ export default class Main extends Component<{}, MainState> {
       <div>
         <h1>Todos</h1>
         <div>
-          <CreateTask createTask={this.createTask} />
+          <TaskCreator createTask={this.createTask} />
           <br />
-          <TaskList tasks={this.state.tasks} deleteTask={this.deleteTask} />
+          <TaskList
+            tasks={this.state.tasks}
+            editTask={this.editTask}
+            deleteTask={this.deleteTask}
+          />
         </div>
       </div>
     );
   }
 }
+
+export type CreateTask = (task: Task) => void;
+export type EditTask = (taskId: number, editedTask: Task) => void;
+export type DeleteTask = (taskId: number) => void;

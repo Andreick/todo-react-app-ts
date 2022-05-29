@@ -1,14 +1,18 @@
 import { Component } from 'react';
 import Task from '../model/Task';
+import { DeleteTask, EditTask } from './Main';
 import TaskItem from './TaskItem';
 
 interface TaskListProps {
   tasks: Task[];
-  deleteTask: (taskId: number) => void;
+  editTask: EditTask;
+  deleteTask: DeleteTask;
 }
 
-export default class TaskList extends Component<TaskListProps> {
-  state = {};
+interface TaskListState {}
+
+export default class TaskList extends Component<TaskListProps, TaskListState> {
+  state: TaskListState = {};
 
   render() {
     return (
@@ -23,6 +27,7 @@ export default class TaskList extends Component<TaskListProps> {
               key={index}
               id={index}
               task={task}
+              editTask={this.props.editTask}
               deleteTask={this.props.deleteTask}
             />
           ))}
