@@ -1,17 +1,15 @@
 import { Component } from 'react';
-import Task from '../interfaces/Task';
+import Task from '../model/Task';
 import CreateTask from './CreateTask';
 import TaskList from './TaskList';
 
 const tasks: Task[] = [];
 
-type MainProps = {};
-
 interface MainState {
   tasks: Task[];
 }
 
-export default class Main extends Component<MainProps, MainState> {
+export default class Main extends Component<{}, MainState> {
   state: MainState = { tasks };
 
   createTask = (task: Task) => {
@@ -19,9 +17,8 @@ export default class Main extends Component<MainProps, MainState> {
       alert("Task can't be empty");
       return;
     }
-    const tasksCopy = Array.from(tasks);
-    tasksCopy.push(task);
-    this.setState({ tasks: tasksCopy });
+    tasks.push(task);
+    this.setState({ tasks });
   };
 
   render() {
@@ -31,7 +28,7 @@ export default class Main extends Component<MainProps, MainState> {
         <div>
           <CreateTask createTask={this.createTask} />
           <br />
-          <TaskList />
+          <TaskList tasks={this.state.tasks} />
         </div>
       </div>
     );

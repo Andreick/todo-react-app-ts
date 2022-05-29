@@ -1,5 +1,5 @@
 import { ChangeEventHandler, Component, FormEventHandler } from 'react';
-import Task from '../interfaces/Task';
+import Task from '../model/Task';
 
 interface CreateTaskProps {
   createTask: (task: Task) => void;
@@ -21,7 +21,7 @@ export default class CreateTask extends Component<CreateTaskProps> {
   handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
     this.props.createTask(this.state.task);
-    //this.setState({ task: '' });
+    this.setState({ task: { description: '' } });
   };
 
   render() {
