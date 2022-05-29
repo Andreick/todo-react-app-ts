@@ -3,7 +3,8 @@ import Task from '../model/Task';
 import TaskCreator from './TaskCreator';
 import TaskList from './TaskList';
 
-const tasks: Task[] = [];
+const localStorageItems = localStorage.getItem('tasks');
+const tasks = localStorageItems ? JSON.parse(localStorageItems) : [];
 
 interface MainState {
   tasks: Task[];
@@ -19,22 +20,26 @@ export default class Main extends Component<{}, MainState> {
     }
     tasks.push(task);
     this.setState({ tasks });
+    localStorage.setItem('tasks', JSON.stringify(tasks));
   };
 
   editTask: EditTask = (taskId, editedTask) => {
     tasks[taskId] = editedTask;
     this.setState({ tasks });
+    localStorage.setItem('tasks', JSON.stringify(tasks));
   };
 
   deleteTask: DeleteTask = (taskId) => {
     tasks.splice(taskId, 1);
     this.setState({ tasks });
+    localStorage.setItem('tasks', JSON.stringify(tasks));
   };
 
   toggleTask: ToggleTask = (taskId) => {
     const task = tasks[taskId];
     task.isCompleted = !task.isCompleted;
     this.setState({ tasks });
+    localStorage.setItem('tasks', JSON.stringify(tasks));
   };
 
   render() {
