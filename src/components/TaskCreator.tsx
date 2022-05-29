@@ -35,7 +35,9 @@ export default class TaskCreator extends Component<CreateTaskProps> {
           onChange={this.handleChange}
           autoFocus
         ></input>
-        <button type="submit">Add</button>
+        <button className="add" type="submit">
+          Add
+        </button>
       </form>
     );
   }
