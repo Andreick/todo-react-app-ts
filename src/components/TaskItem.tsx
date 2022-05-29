@@ -5,13 +5,14 @@ import {
   MouseEventHandler,
 } from 'react';
 import Task from '../model/Task';
-import { DeleteTask, EditTask } from './Main';
+import { DeleteTask, EditTask, ToggleTask } from './Main';
 
 interface TaskItemProps {
   id: number;
   task: Task;
   editTask: EditTask;
   deleteTask: DeleteTask;
+  toggleTask: ToggleTask;
 }
 
 interface TaskItemState {
@@ -27,7 +28,9 @@ export default class TaskItem extends Component<TaskItemProps> {
   };
 
   handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    this.setState({ task: { description: event.target.value } });
+    this.setState({
+      task: { ...this.state.task, description: event.target.value },
+    });
   };
 
   handleSubmit: FormEventHandler<HTMLFormElement> &
@@ -39,6 +42,10 @@ export default class TaskItem extends Component<TaskItemProps> {
 
   deleteTask = () => {
     this.props.deleteTask(this.props.id);
+  };
+
+  toggleTask = () => {
+    this.props.toggleTask(this.props.id);
   };
 
   render() {
@@ -66,7 +73,20 @@ export default class TaskItem extends Component<TaskItemProps> {
           </>
         ) : (
           <>
-            <td>{this.props.task.description}</td>
+            <td className="task" onClick={this.toggleTask}>
+              <input
+                type="checkbox"
+                readOnly
+                checked={this.props.task.isCompleted}
+              ></input>
+              <span
+                className={
+                  this.props.task.isCompleted ? 'completed' : 'not-completed'
+                }
+              >
+                {this.props.task.description}
+              </span>
+            </td>
             <td>
               <button onClick={() => this.setEditingState(true)}>Edit</button>
               <button onClick={this.deleteTask}>Delet</button>

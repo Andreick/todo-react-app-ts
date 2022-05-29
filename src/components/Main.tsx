@@ -31,6 +31,12 @@ export default class Main extends Component<{}, MainState> {
     this.setState({ tasks });
   };
 
+  toggleTask: ToggleTask = (taskId) => {
+    const task = tasks[taskId];
+    task.isCompleted = !task.isCompleted;
+    this.setState({ tasks });
+  };
+
   render() {
     return (
       <div>
@@ -42,6 +48,7 @@ export default class Main extends Component<{}, MainState> {
             tasks={this.state.tasks}
             editTask={this.editTask}
             deleteTask={this.deleteTask}
+            toggleTask={this.toggleTask}
           />
         </div>
       </div>
@@ -52,3 +59,4 @@ export default class Main extends Component<{}, MainState> {
 export type CreateTask = (task: Task) => void;
 export type EditTask = (taskId: number, editedTask: Task) => void;
 export type DeleteTask = (taskId: number) => void;
+export type ToggleTask = (taskId: number) => void;
